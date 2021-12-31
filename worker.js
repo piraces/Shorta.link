@@ -23,7 +23,7 @@ const domain = 'https://shorta.link';
  */
 async function handlePOST(request) {
 	const apiKey = request.headers.get(apiKeyHeader);
-	if (apiKey !== SECRET_API_KEY) {
+	if (apiKey && apiKey !== SECRET_API_KEY) {
 		return new Response('Invalid X-Api-Key header', { status: 403 });
 	}
 
@@ -74,7 +74,7 @@ async function handlePOST(request) {
  */
 async function handleDELETE(request) {
 	const apiKey = request.headers.get(apiKeyHeader);
-	if (apiKey !== SECRET_API_KEY) {
+	if (apiKey && apiKey !== SECRET_API_KEY) {
 		return new Response('Invalid X-Api-Key header', { status: 403 });
 	}
 
@@ -100,7 +100,7 @@ async function handleRequest(request) {
 	if (!path) {
 		// Return list of available shortlinks if user supplies admin credentials.
 		const apiKey = request.headers.get(apiKeyHeader);
-		if (apiKey === SECRET_API_KEY) {
+		if (apiKey && apiKey === SECRET_API_KEY) {
 			const { keys } = await LINKS.list();
 			let paths = "";
 			keys.forEach(element => paths += `${element.name}\n`);
@@ -108,7 +108,7 @@ async function handleRequest(request) {
 			return new Response(paths, { status: 200 });
 		}
 
-		return new Response.redirect(domain, 301);
+		return Response.redirect(domain, 301);
 	}
 
 	const redirectURL = await LINKS.get(path);
