@@ -1,9 +1,10 @@
-name = "vhlink"
+name = "shortalink"
 type = "javascript"
-account_id = "39a76d640a29996bffbd58c36a537c2b"
-workers_dev = true
-route = ""
-zone_id = ""
+account_id = "46c391370bbf0010bf0d5f4bbc237435"
+
+zone_id = "6e21c43b302fd2b335fac4087609d5c5"
+route = "shorta.link/*"
+
 kv_namespaces = [
-  { binding = "LINKS", id = "77612e844ef647009a28a1153fcd0a96", preview_id = "77612e844ef647009a28a1153fcd0a96" }
+  { binding = "LINKS", id = "24b5bc56b42243ffa62ee490a81be370", preview_id = "24b5bc56b42243ffa62ee490a81be370" }
 ]
