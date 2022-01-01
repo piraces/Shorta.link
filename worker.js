@@ -53,7 +53,7 @@ async function handlePOST(request) {
 			return new Response(`${slug} already exists.`, { status: 400 });
 		} else {
 			await LINKS.put(slug, redirectURL);
-			return new Response(`${redirectURL} in now shortened with ${domain}/${slug}`, {
+			return new Response(`${domain}/${slug}`, {
 				status: 201,
 			});
 		}
@@ -64,7 +64,7 @@ async function handlePOST(request) {
 		generatedHash = nanoid(8);
 	}
 	await LINKS.put(generatedHash, redirectURL);
-	return new Response(`${redirectURL} in now shortened with ${domain}/${generatedHash}`, {
+	return new Response(`${domain}/${generatedHash}`, {
 		status: 201,
 	});
 }
