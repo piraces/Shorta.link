@@ -18,10 +18,10 @@ const apiKeyHeader = 'X-Api-Key';
 const domain = 'https://shorta.link';
 const frontDomain = 'https://go.shorta.link';
 
-function setCustomHeaders(response) {
-	const newResponse = new Response(response.body, response);
-	newResponse.headers.set("Access-Control-Allow-Origin", "*");
-	return newResponse;
+function setCustomHeaders(init) {
+	const headers = new Headers(init);
+	headers.append("Access-Control-Allow-Origin", "*");
+	return headers;
 }
 
 /**
@@ -29,9 +29,8 @@ function setCustomHeaders(response) {
  * @param {Request} request
  */
 async function handlePOST(request) {
+	const headers = setCustomHeaders(request.headers);
 	const apiKey = request.headers.get(apiKeyHeader);
-	const response = await fetch(request);
-	const { headers } = setCustomHeaders(response);
 	if (apiKey && apiKey !== SECRET_API_KEY) {
 		return new Response('Invalid X-Api-Key header', { status: 403, headers: headers });
 	}
@@ -84,9 +83,8 @@ async function handlePOST(request) {
  * @param {Request} request
  */
 async function handleDELETE(request) {
+	const headers = setCustomHeaders(request.headers);
 	const apiKey = request.headers.get(apiKeyHeader);
-	const response = await fetch(request);
-	const { headers } = setCustomHeaders(response);
 	if (apiKey && apiKey !== SECRET_API_KEY) {
 		return new Response('Invalid X-Api-Key header', { status: 403, headers: headers });
 	}
@@ -108,8 +106,7 @@ async function handleDELETE(request) {
  * @param {Request} request
  */
 async function handleRequest(request) {
-	const response = await fetch(request);
-	const { headers } = setCustomHeaders(response);
+	const headers = setCustomHeaders(request.headers);
 	const url = new URL(request.url);
 	const path = url.pathname.split('/')[1];
 	if (!path) {
