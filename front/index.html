@@ -72,27 +72,33 @@
             if (slug) {
                 data.append('slug', slug);
             }
-            
-            const xhr = new XMLHttpRequest();
-            xhr.open('POST', 'https://shorta.link', true);
-            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            const section = document.getElementById('urlResult');
+            const errorSection = document.getElementById('urlError');
 
-            xhr.onreadystatechange = function () {
-                if (xhr.readyState === 4) {
-                    const section = document.getElementById('urlResult');
-                    if (xhr.status === 200) {
-                        const url = xhr.responseText;
-                        section.innerHTML = `<a id="link" href="${url}">${url}</a>`;
-                        errorSection.innerHTML = '';
-                    } else {
-                        const errorSection = document.getElementById('urlError');
-                        section.innerHTML = '';
-                        errorSection.innerHTML = `<div>${xhr.responseText}</div>`;
-                    }
+            fetch('https://shorta.link',
+            {
+                method: 'POST',
+                headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+                body: new URLSearchParams(data)
+            }).then(async response => {
+                var newResponse =
+                {
+                    status: response.status, 
+                    text: await response.text()
+                };
+                return newResponse;
+            }).then(response => {
+                if (response.status === 201) {
+                    const url = response.text;
+                    section.innerHTML = `<a id="link" href="${url}">${url}</a>`;
+                    errorSection.innerHTML = '';
+                } else {
+                    section.innerHTML = '';
+                    errorSection.innerHTML = `<div>${response.text}</div>`;
                 }
-            };
-
-            xhr.send(data);
+            }).catch(error => {
+                console.error(error);
+            });
         }
     </script>
 </body>
