@@ -16,6 +16,7 @@ addEventListener('fetch', event => {
 
 const apiKeyHeader = 'X-Api-Key';
 const domain = 'https://shorta.link';
+const frontDomain = 'https://go.shorta.link';
 
 /**
  * Respond to POST requests with shortened URL creation
@@ -108,7 +109,7 @@ async function handleRequest(request) {
 			return new Response(paths, { status: 200 });
 		}
 
-		return Response.redirect(domain, 301);
+		return Response.redirect(frontDomain, 301);
 	}
 
 	const redirectURL = await LINKS.get(path);
