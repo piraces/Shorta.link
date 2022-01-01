@@ -19,9 +19,9 @@ const domain = 'https://shorta.link';
 const frontDomain = 'https://go.shorta.link';
 
 function setCustomHeaders(response) {
-	let newHeaders = new Headers(response.headers)
-  	newHeaders.set("Access-Control-Allow-Origin", "*");
-	return newHeaders;
+	const newResponse = new Response(response.body, response);
+	newResponse.headers.set("Access-Control-Allow-Origin", "*");
+	return newResponse;
 }
 
 /**
@@ -31,7 +31,7 @@ function setCustomHeaders(response) {
 async function handlePOST(request) {
 	const apiKey = request.headers.get(apiKeyHeader);
 	const response = await fetch(request);
-	const headers = setCustomHeaders(response.headers);
+	const { headers } = setCustomHeaders(response);
 	if (apiKey && apiKey !== SECRET_API_KEY) {
 		return new Response('Invalid X-Api-Key header', { status: 403, headers: headers });
 	}
@@ -86,7 +86,7 @@ async function handlePOST(request) {
 async function handleDELETE(request) {
 	const apiKey = request.headers.get(apiKeyHeader);
 	const response = await fetch(request);
-	const headers = setCustomHeaders(response.headers);
+	const { headers } = setCustomHeaders(response);
 	if (apiKey && apiKey !== SECRET_API_KEY) {
 		return new Response('Invalid X-Api-Key header', { status: 403, headers: headers });
 	}
@@ -109,7 +109,7 @@ async function handleDELETE(request) {
  */
 async function handleRequest(request) {
 	const response = await fetch(request);
-	const headers = setCustomHeaders(response.headers);
+	const { headers } = setCustomHeaders(response);
 	const url = new URL(request.url);
 	const path = url.pathname.split('/')[1];
 	if (!path) {
