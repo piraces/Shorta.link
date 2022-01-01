@@ -18,14 +18,22 @@ const apiKeyHeader = 'X-Api-Key';
 const domain = 'https://shorta.link';
 const frontDomain = 'https://go.shorta.link';
 
+function setCustomHeaders(response) {
+	let newHeaders = new Headers(response.headers)
+  	newHeaders.set("Access-Control-Allow-Origin", "*");
+	return newHeaders;
+}
+
 /**
  * Respond to POST requests with shortened URL creation
  * @param {Request} request
  */
 async function handlePOST(request) {
 	const apiKey = request.headers.get(apiKeyHeader);
+	const response = await fetch(request);
+	const headers = setCustomHeaders(response.headers);
 	if (apiKey && apiKey !== SECRET_API_KEY) {
-		return new Response('Invalid X-Api-Key header', { status: 403 });
+		return new Response('Invalid X-Api-Key header', { status: 403, headers: headers });
 	}
 
 	const data = await request.formData();
@@ -33,7 +41,7 @@ async function handlePOST(request) {
 	const slug = data.get('slug');
 
 	if (!redirectURL){
-		return new Response('`url` need to be set.', { status: 400 });
+		return new Response('`url` need to be set.', { status: 400, headers: headers });
 	}
 
 	// validate redirectURL is a URL
@@ -41,7 +49,7 @@ async function handlePOST(request) {
 		new URL(redirectURL);
 	} catch (e) {
 		if (e instanceof TypeError) 
-			return new Response('`url` needs to be a valid http url.', { status: 400 });
+			return new Response('`url` needs to be a valid http url.', { status: 400, headers: headers });
 		else throw e;
 	};
 
@@ -50,11 +58,12 @@ async function handlePOST(request) {
 		// No overwrite current slug if it exists
 		const existing = await LINKS.get(slug);
 		if (existing) {
-			return new Response(`${slug} already exists.`, { status: 400 });
+			return new Response(`${slug} already exists.`, { status: 400, headers: headers });
 		} else {
 			await LINKS.put(slug, redirectURL);
 			return new Response(`${domain}/${slug}`, {
 				status: 201,
+				headers: headers
 			});
 		}
 	}
@@ -66,6 +75,7 @@ async function handlePOST(request) {
 	await LINKS.put(generatedHash, redirectURL);
 	return new Response(`${domain}/${generatedHash}`, {
 		status: 201,
+		headers: headers
 	});
 }
 
@@ -75,17 +85,19 @@ async function handlePOST(request) {
  */
 async function handleDELETE(request) {
 	const apiKey = request.headers.get(apiKeyHeader);
+	const response = await fetch(request);
+	const headers = setCustomHeaders(response.headers);
 	if (apiKey && apiKey !== SECRET_API_KEY) {
-		return new Response('Invalid X-Api-Key header', { status: 403 });
+		return new Response('Invalid X-Api-Key header', { status: 403, headers: headers });
 	}
 
 	const url = new URL(request.url);
 	const path = url.pathname.split('/')[1];
 	if (!path) {
-		return new Response('Not found', { status: 404 });
+		return new Response('Not found', { status: 404, headers: headers });
 	}
 	await LINKS.delete(path);
-	return new Response(`${request.url} deleted!`, { status: 200 });
+	return new Response(`${request.url} deleted!`, { status: 200, headers: headers });
 }
 
 /**
@@ -96,6 +108,8 @@ async function handleDELETE(request) {
  * @param {Request} request
  */
 async function handleRequest(request) {
+	const response = await fetch(request);
+	const headers = setCustomHeaders(response.headers);
 	const url = new URL(request.url);
 	const path = url.pathname.split('/')[1];
 	if (!path) {
@@ -106,7 +120,7 @@ async function handleRequest(request) {
 			let paths = "";
 			keys.forEach(element => paths += `${element.name}\n`);
 			
-			return new Response(paths, { status: 200 });
+			return new Response(paths, { status: 200, headers: headers });
 		}
 
 		return Response.redirect(frontDomain, 301);
@@ -117,5 +131,5 @@ async function handleRequest(request) {
 		return Response.redirect(redirectURL, 302);
 	}
 
-	return new Response('URL not found. Ensure it is correct. Otherwise, it has been removed due to TOS, DMCA request or others', { status: 404 });
+	return new Response('URL not found. Ensure it is correct. Otherwise, it has been removed due to TOS, DMCA request or others', { status: 404, headers: headers });
 }
