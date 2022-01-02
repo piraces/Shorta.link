@@ -35,7 +35,8 @@
     <nav class="container-fluid">
         <ul>
             <li><a href="https://go.shorta.link" aria-label="Back home">
-                    <img src="assets/apple-touch-icon.png" alt="Shortalink! logo" style="height: 1.5rem; min-width: 1.5rem; min-height: 1.5rem;">
+                    <img src="assets/apple-touch-icon.png" alt="Shortalink! logo"
+                        style="height: 1.5rem; min-width: 1.5rem; min-height: 1.5rem;">
                 </a></li>
             <li><strong>Shortalink!</strong></li>
         </ul>
@@ -43,7 +44,8 @@
             <li><a href="https://github.com/piraces/shorta.link/blob/main/README.md" class="secondary">Docs</a></li>
             <li><a href="https://go.shorta.link/terms.html" class="secondary">Terms</a></li>
             <li><a href="https://go.shorta.link/privacy.html" class="secondary">Privacy</a></li>
-            <li><a href="mailto:raul@piraces.dev?subject=%5BABUSE%5D%20-%20shorta.link&body=Please%20fill%20the%20following%20template%3A%0D%0A-%20URL%3A%0D%0A-%20Reason%3A%0D%0A-%20Information%3A%0D%0A-%20Contact%20mail%3A%0D%0A" class="secondary">Abuse</a></li>
+            <li><a href="mailto:raul@piraces.dev?subject=%5BABUSE%5D%20-%20shorta.link&body=Please%20fill%20the%20following%20template%3A%0D%0A-%20URL%3A%0D%0A-%20Reason%3A%0D%0A-%20Information%3A%0D%0A-%20Contact%20mail%3A%0D%0A"
+                    class="secondary">Abuse</a></li>
             <li><a href="https://github.com/piraces/shorta.link" class="contrast"
                     aria-label="Shortalink! GitHub repository"><svg aria-hidden="true" focusable="false" role="img"
                         xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512" height="22px">
@@ -55,75 +57,14 @@
     </nav>
     <main class="container">
         <article>
-            <label for="firstname">
-                URL
-                <input type="url" id="url" name="url" placeholder="https://google.com" required>
-            </label>
-            <label for="slug">
-                Alias
-                <input type="text" id="slug" name="slug" placeholder="alias">
-            </label>
-
-            <button onclick="submitUrl()">Shorten</button>
-
-            <p id="urlResult" style="text-align: center;"></p>
-            <p id="urlError" style="text-align: center;"></p>
+            <h2>shorta.link Privacy Policy</h2>
+            <p>We do not collect any personally identifying information from users of shorta.link. We store only the
+                information necessary to provide our URL shortening service (such as original long URLs).</p>
+            <p>URLs shortened by shorta.link are not private and should not be treated as such. Third parties could easily
+                guess the short URL that you are using, so you should not use shorta.link to link to sensitive or secure data.
+            </p>
         </article>
     </main>
-    <script>
-        document
-            .getElementById('url')
-            .addEventListener('keyup', function (event) {
-                if (event.code === 'Enter') {
-                    event.preventDefault();
-                    submitUrl();
-                }
-            });
-
-        document
-            .getElementById('slug')
-            .addEventListener('keyup', function (event) {
-                if (event.code === 'Enter') {
-                    event.preventDefault();
-                    submitUrl();
-                }
-            });
-
-        function submitUrl() {
-            var data = new FormData();
-            data.append('url', document.getElementById('url').value);
-            var slug = document.getElementById('slug').value;
-            if (slug) {
-                data.append('slug', slug);
-            }
-            const section = document.getElementById('urlResult');
-            const errorSection = document.getElementById('urlError');
-
-            fetch('https://shorta.link',
-                {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                    body: new URLSearchParams(data)
-                }).then(async response => {
-                    var newResponse =
-                    {
-                        status: response.status,
-                        text: await response.text()
-                    };
-                    return newResponse;
-                }).then(response => {
-                    if (response.status === 201) {
-                        const url = response.text;
-                        section.innerHTML = `<b>✂ Here is your short URL:</b> <a id="link" href="${url}">${url}</a>`;
-                        errorSection.innerHTML = '';
-                    } else {
-                        section.innerHTML = '';
-                        errorSection.innerHTML = `<pre>⛔ ${response.text}</pre>`;
-                    }
-                }).catch(error => {
-                    console.error(error);
-                });
-        }
-    </script>
 </body>
+
 </html>
