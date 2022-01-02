@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Shortalink!</title>
+    <link rel="stylesheet" href="https://unpkg.com/@picocss/pico@latest/css/pico.min.css">
+    <noscript>
+        Javascript needs to be enabled in order to make this frontend work... <br>
+        Nevertheless, you can make use of shorta.link by making direct HTTP requests.<br>
+        More info: <a href="https://raw.githubusercontent.com/piraces/shorta.link/main/README.md">Project README</a>.
+    </noscript>
+
+    <meta name="description" content="Simple & Anonymous URL shortener">
+    <meta property="og:title" content="Shortalink!">
+    <meta property="og:description" content="Simple & Anonymous URL shortener">
+    <meta property="og:image" content="https://go.shorta.link/assets/android-chrome-512x512.png">
+    <meta property="og:image:alt" content="Shortalink! Logo">
+    <meta property="og:locale" content="en_US">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta property="og:url" content="https://go.shorta.link">
+    <link rel="canonical" href="https://go.shorta.link">
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png">
+    <link rel="manifest" href="/assets/site.webmanifest">
+    <link rel="mask-icon" href="/assets/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">
+</head>
+
+<body>
+    <nav class="container-fluid">
+        <ul>
+            <li><a href="https://go.shorta.link" aria-label="Back home">
+                    <img src="assets/apple-touch-icon.png" alt="Shortalink! logo"
+                        style="height: 1.5rem; min-width: 1.5rem; min-height: 1.5rem;">
+                </a></li>
+            <li><strong>Shortalink!</strong></li>
+        </ul>
+        <ul>
+            <li><a href="https://github.com/piraces/shorta.link/blob/main/README.md" class="secondary">Docs</a></li>
+            <li><a href="https://go.shorta.link/terms.html" class="secondary">Terms</a></li>
+            <li><a href="https://go.shorta.link/privacy.html" class="secondary">Privacy</a></li>
+            <li><a href="mailto:raul@piraces.dev?subject=%5BABUSE%5D%20-%20shorta.link&body=Please%20fill%20the%20following%20template%3A%0D%0A-%20URL%3A%0D%0A-%20Reason%3A%0D%0A-%20Information%3A%0D%0A-%20Contact%20mail%3A%0D%0A"
+                    class="secondary">Abuse</a></li>
+            <li><a href="https://github.com/piraces/shorta.link" class="contrast"
+                    aria-label="Shortalink! GitHub repository"><svg aria-hidden="true" focusable="false" role="img"
+                        xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512" height="22px">
+                        <path fill="currentColor"
+                            d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z">
+                        </path>
+                    </svg></a></li>
+        </ul>
+    </nav>
+    <main class="container">
+        <article>
+            <h2>shorta.link Terms &amp; Conditions</h2>
+            <p>We've tried to make our terms as clear and easy to read as possible, so don't expect pages of legalese!
+            </p>
+            <h4>Forbidden activities</h4>
+            <p>shorta.link may <b>NOT</b> be used creating shortened URLs that: </p>
+            <ul>
+                <li>Are used in commercial email</li>
+                <li>Are used for unsolicited advertising (spam) including email, forum posts, SMS messages and spam
+                    posts/messaging on social networks such as Facebook or Twitter</li>
+                <li>Link to malicious content (phishing, viruses, trojans, adware, any other malware)</li>
+                <li>Link to any form of child pornography</li>
+                <li>Link to other URL shortening or redirection sites or scripts (these "chains" of links are often used
+                    to hide malicious usage)</li>
+                <li>Link to material that infringes copyright</li>
+                <li>Link to material we consider unethical including but not limited to "get rich quick" schemes,
+                    pyramid schemes, paid "self help" schemes, dubious competitions, sites requiring users to fill out
+                    paid surveys and sites with a model that encourges users to spam others (e.g. "Sign up 10 members to
+                    get X free")</li>
+            </ul>
+            <p>In addition any use of shorta.link and any content linked to must be legal in the UK (where shorta.link is hosted).
+            </p>
+            <h4>URL rejection and removal</h4>
+            <p>We can reject URLs when they are submitted or later remove, disable or redirect shortened URLs for any
+                reason. Our intention is only to do this where they violate our terms or the spirit of fair usage, or we
+                have reason to suspect they do (e.g. if they appear on a blacklist we consult). We're only human and
+                mistakes are occasionally made - we can reinstate disabled shortened URLs if we think it's appropriate
+                to do so.</p>
+            <h4>Excessive usage</h4>
+            <p>We need to keep shorta.link fast and responsive for everyone so we limit the amount it can be used to levels we
+                consider reasonable.
+                Users may not open more than 5 concurrent connections to shorta.link at any time.
+            <h4>Our shortened URLs</h4>
+            <p>Users who create shorta.link shortened URLs cannot later delete them or modify their destinations (this helps
+                to prevent abuse). Our shortened URLs could redirect anywhere, you follow them at your own risk and
+                shorta.link is not responsible or liable for content you visit.</p>
+            <h4>Data usage</h4>
+            <p>We do not share any information with third parties unless explicitly stated in our <a
+                    href="https://go.shorta.link/privacy.html">privacy policy</a>. We do not collect or store any information other that
+                required to provide you with the service and to provide us with site usage statistics.</p>
+            <h4>Warranty and liability</h4>
+            <p>The short version: shorta.link is free. We'll do our best to maintain it but we might have problems or things
+                might break. If they do, we don't owe you anything.</p>
+            <p>The long version: we provide shorta.link as a free service - as such it carries no warranty of any kind. shorta.link
+                and its staff and owners are not liable for any loss or problem you might suffer due to using the
+                service. This includes losses in the event that the service stops operating, is unavailable or slow,
+                suffers data loss, or any other issue which might be considered detrimental to you.</p>
+            <h4>Violation of our terms</h4>
+            <p>If you violate our terms, depending on the severity of the abuse, we may disable shortened URLs you have
+                created or block you from using shorta.link (and our other URL shorteners) temporarily or permanently. In
+                cases of severe abuse or illegal usage we may report this to the relevant law enforcement agencies.</p>
+        </article>
+    </main>
+</body>
+
+</html>
