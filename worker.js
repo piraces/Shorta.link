@@ -2,15 +2,13 @@
 let nanoid=(t=21)=>{let e="",r=crypto.getRandomValues(new Uint8Array(t));for(;t--;){let n=63&r[t];e+=n<36?n.toString(36):n<62?(n-26).toString(36).toUpperCase():n<63?"_":"-"}return e};
 
 addEventListener('fetch', event => {
-	const { request } = event;
-
-	switch (request.method) {
+	switch (event.request.method) {
 		case 'POST':
-			return event.respondWith(handlePOST(request));
+			return event.respondWith(handlePOST(event.request));
 		case 'DELETE':
-			return event.respondWith(handleDELETE(request));
+			return event.respondWith(handleDELETE(event.request));
 		default:
-			return event.respondWith(handleRequest(request));
+			return event.respondWith(handleRequest(event.request));
 	}
 });
 
@@ -118,6 +116,7 @@ async function handleDELETE(request) {
  * @param {Request} request
  */
 async function handleRequest(request) {
+	const userAgent = request.headers.get('user-agent');
 	const headers = setCustomHeaders(request.headers);
 	const url = new URL(request.url);
 	const path = url.pathname.split('/')[1];
@@ -132,8 +131,7 @@ async function handleRequest(request) {
 			return new Response(paths, { status: 200, headers: headers });
 		}
 
-		const userAgent = request.headers['user-agent'];
-		if (userAgent && plaintextClients.includes(userAgent)) {
+		if (userAgent && plaintextClients.some(ua => userAgent.includes(ua))) {
 			return new Response(frontPage, { status: 200, headers: headers });
 		}
 		return Response.redirect(frontDomain, 301);
