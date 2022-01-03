@@ -2,7 +2,13 @@
 
 Custom link shortener service using Cloudflare Workers + KV store on your domain. The Workers free tier is quite generous and perfectly suited for this since KV is optimized for high reads and infrequent writes, which is our use case.
 
+This project is privacy friendly, nothing but the URL and necessary data for rate limit are collected, and after a time discarded (except for the URL if it is fair usage).
+
 This API is easily consumed programmatically, such as through shell functions, making it trivial to shorten links on the fly.
+It is console / cURL friendly:
+![Curl example](curl.png)
+
+Will show a text frontend when accessed via a text client such as cURL.
 
 Additionally, it is possible to create short links right from a webpage if that is more to your liking: [https://go.shorta.link](https://go.shorta.link).
 
