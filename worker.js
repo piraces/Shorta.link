@@ -17,6 +17,18 @@ addEventListener('fetch', event => {
 const apiKeyHeader = 'X-Api-Key';
 const domain = 'https://shorta.link';
 const frontDomain = 'https://go.shorta.link';
+const plaintextClients = ['curl', 'wget', 'fetch', 'httpie', 'lwp-request', 'python-requests'];
+const frontPage = `
+Send a POST request to https://shorta.link with form data params 'url' and (optional) 'slug' to generate a short link from the specified URL.
+
+Example:
+$ curl -F "url=https://www.google.com" https://shorta.link
+> https://shorta.link/bH19WkWO
+
+Example with slug:
+$ curl -F "url=https://www.google.com" -F "slug=google" https://shorta.link
+> https://shorta.link/google
+`;
 
 function setCustomHeaders(init) {
 	const headers = new Headers(init);
@@ -60,7 +72,7 @@ async function handlePOST(request) {
 			return new Response(`${slug} already exists.`, { status: 400, headers: headers });
 		} else {
 			await LINKS.put(slug, redirectURL);
-			return new Response(`${domain}/${slug}`, {
+			return new Response(`${domain}/${slug}\n`, {
 				status: 201,
 				headers: headers
 			});
@@ -72,7 +84,7 @@ async function handlePOST(request) {
 		generatedHash = nanoid(8);
 	}
 	await LINKS.put(generatedHash, redirectURL);
-	return new Response(`${domain}/${generatedHash}`, {
+	return new Response(`${domain}/${generatedHash}\n`, {
 		status: 201,
 		headers: headers
 	});
@@ -120,6 +132,10 @@ async function handleRequest(request) {
 			return new Response(paths, { status: 200, headers: headers });
 		}
 
+		const userAgent = request.headers['user-agent'];
+		if (userAgent && plaintextClients.includes(userAgent)) {
+			return new Response(frontPage, { status: 200, headers: headers });
+		}
 		return Response.redirect(frontDomain, 301);
 	}
 
